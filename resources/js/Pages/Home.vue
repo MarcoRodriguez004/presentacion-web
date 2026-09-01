@@ -24,6 +24,21 @@ interface Principle {
     text: string;
 }
 
+interface Experience {
+    id: string;
+    company: string;
+    project: string;
+    role: string;
+    period: string;
+    location: string;
+    category: string;
+    color: string;
+    headline: string;
+    description: string;
+    highlights: string[];
+    stack: string[];
+}
+
 interface Contact {
     label: string;
     value: string;
@@ -43,6 +58,7 @@ const props = defineProps<{
     };
     facts: { value: string; label: string }[];
     stack: StackGroup[];
+    experience: Experience[];
     principles: Principle[];
     contacts: Contact[];
 }>();
@@ -163,8 +179,10 @@ onBeforeUnmount(stopCarousel);
                 >
                     <a class="nav-link" href="#inicio" @click="closeMenu">Inicio</a>
                     <a class="nav-link" href="#stack" @click="closeMenu">Stack</a>
+                    <a class="nav-link" href="#experiencia" @click="closeMenu">Casos</a>
                     <a class="nav-link" href="#metodo" @click="closeMenu">Método</a>
                     <a class="nav-link" href="#contacto" @click="closeMenu">Contacto</a>
+                    <span class="availability-pill hidden items-center gap-2 font-mono text-[9px] uppercase tracking-[.05em] text-white/55 lg:inline-flex"><i class="h-1.5 w-1.5 rounded-full bg-acid"></i> Disponible</span>
                     <a class="mt-4 inline-flex items-center justify-between gap-4 bg-acid px-3.5 py-2.5 font-mono text-[10px] uppercase tracking-[0.04em] text-ink transition hover:bg-[#e8ff90] md:mt-0" href="/cv" @click="trackEvent('cv_download', { location: 'navigation' })">
                         Descargar CV <span aria-hidden="true">↗</span>
                     </a>
@@ -185,23 +203,42 @@ onBeforeUnmount(stopCarousel);
                             <h1 class="font-display text-[clamp(3.25rem,8vw,7rem)] font-bold leading-[.92] tracking-[-.075em]">Construyo software<br><span class="text-acid">que tiene sentido.</span></h1>
                             <p class="mt-8 max-w-2xl text-base leading-8 text-[#bdcbc5] sm:text-lg">{{ props.profile.summary }}</p>
                             <div class="mt-10 flex flex-col items-start gap-6 sm:flex-row sm:items-center">
-                                <a class="inline-flex min-w-[205px] items-center justify-between gap-7 bg-acid px-4 py-4 text-xs font-bold text-ink transition hover:-translate-y-0.5 hover:bg-[#e8ff90]" href="#stack">Explorar mi stack <span aria-hidden="true">↓</span></a>
+                                <a class="inline-flex min-w-[205px] items-center justify-between gap-7 bg-acid px-4 py-4 text-xs font-bold text-ink transition hover:-translate-y-0.5 hover:bg-[#e8ff90]" href="#experiencia">Ver casos reales <span aria-hidden="true">↓</span></a>
                                 <a class="border-b border-paper pb-1 text-xs font-bold transition hover:gap-3 hover:text-coral" href="mailto:marco.rh004@gmail.com" @click.prevent="openEmail">Hablemos <span aria-hidden="true">↗</span></a>
                             </div>
                         </div>
 
-                        <aside class="relative border border-white/25 bg-ink-soft/60 p-7 shadow-[24px_24px_0_rgba(216,243,106,.08)] transition-all delay-150 duration-700" :class="isVisible ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'">
+                        <aside class="hero-console relative border border-white/25 bg-ink-soft/60 p-5 shadow-[24px_24px_0_rgba(216,243,106,.08)] transition-all delay-150 duration-700 sm:p-7" :class="isVisible ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'" aria-label="Mapa visual de mi forma de construir software">
                             <span class="absolute right-7 top-[-1px] h-[3px] w-10 bg-coral"></span>
-                            <p class="font-mono text-[10px] uppercase tracking-[.08em] text-white/55">// MARCO.RH / PERFIL</p>
-                            <div class="flex min-h-[260px] flex-col justify-center font-mono text-[12px] leading-9 text-[#dbe4df] sm:text-sm">
-                                <span><i class="not-italic text-coral">const</i> profile <b class="font-normal text-acid">=</b> {</span>
-                                <span class="pl-6"><em class="not-italic text-blue">role:</em> <strong class="font-normal text-acid">'{{ props.profile.role.toLowerCase() }}'</strong>,</span>
-                                <span class="pl-6"><em class="not-italic text-blue">focus:</em> <strong class="font-normal text-acid">'business logic'</strong>,</span>
-                                <span class="pl-6"><em class="not-italic text-blue">stack:</em> <strong class="font-normal text-acid">'{{ props.profile.specialty }}'</strong>,</span>
-                                <span class="pl-6"><em class="not-italic text-blue">english:</em> <strong class="font-normal text-acid">'{{ props.profile.english.replace('Inglés ', '') }}'</strong></span>
+                            <div class="flex items-center justify-between border-b border-white/15 pb-4 font-mono text-[9px] uppercase tracking-[.08em] text-white/55">
+                                <span>// MARCO.RH / SYSTEM MAP</span>
+                                <span class="inline-flex items-center gap-2 text-acid"><i class="status-dot h-1.5 w-1.5 rounded-full bg-current"></i> online</span>
+                            </div>
+
+                            <div class="hero-console-scene" aria-hidden="true">
+                                <span class="hero-orbit hero-orbit-one"></span>
+                                <span class="hero-orbit hero-orbit-two"></span>
+                                <span class="hero-orbit hero-orbit-three"></span>
+                                <span class="hero-connection connection-one"></span>
+                                <span class="hero-connection connection-two"></span>
+                                <span class="hero-connection connection-three"></span>
+                                <span class="hero-node hero-node-api">API</span>
+                                <span class="hero-node hero-node-data">DATA</span>
+                                <span class="hero-node hero-node-ui">UI</span>
+                                <span class="hero-node hero-node-security">SEC</span>
+                                <div class="hero-console-core">
+                                    <strong>MR</strong>
+                                    <span>logic<br>first</span>
+                                </div>
+                            </div>
+
+                            <div class="hero-console-code font-mono text-[11px] leading-7 text-[#dbe4df] sm:text-xs">
+                                <span><i class="not-italic text-coral">const</i> system <b class="font-normal text-acid">=</b> {</span>
+                                <span class="pl-5"><em class="not-italic text-blue">focus:</em> <strong class="font-normal text-acid">'business logic'</strong>,</span>
+                                <span class="pl-5"><em class="not-italic text-blue">layers:</em> <strong class="font-normal text-acid">['data', 'UI', 'security']</strong></span>
                                 <span>};</span>
                             </div>
-                            <div class="flex flex-col gap-2 border-t border-white/15 pt-4 font-mono text-[9px] uppercase tracking-[.04em] text-white/65 sm:flex-row sm:items-center sm:justify-between">
+                            <div class="mt-5 flex flex-col gap-2 border-t border-white/15 pt-4 font-mono text-[9px] uppercase tracking-[.04em] text-white/65 sm:flex-row sm:items-center sm:justify-between">
                                 <span>Laravel + Vue.js</span>
                                 <span class="inline-flex items-center gap-2"><i class="h-1.5 w-1.5 rounded-full bg-acid"></i> Estado de México</span>
                             </div>
@@ -220,6 +257,13 @@ onBeforeUnmount(stopCarousel);
                     </div>
                 </div>
             </section>
+
+            <div class="signal-band border-y border-ink bg-acid text-ink" aria-label="Áreas de trabajo">
+                <div class="signal-track flex w-max items-center gap-8 py-3 font-mono text-[10px] uppercase tracking-[.08em]" aria-hidden="true">
+                    <span>lógica de negocio <b>✳</b></span><span>datos que cuentan una historia <b>✳</b></span><span>interfaces que orientan <b>✳</b></span><span>seguridad desde el diseño <b>✳</b></span>
+                    <span>lógica de negocio <b>✳</b></span><span>datos que cuentan una historia <b>✳</b></span><span>interfaces que orientan <b>✳</b></span><span>seguridad desde el diseño <b>✳</b></span>
+                </div>
+            </div>
 
             <section id="stack" class="bg-paper py-24 sm:py-32">
                 <div class="mx-auto w-[min(1180px,calc(100%-40px))] sm:w-[min(1180px,calc(100%-64px))]">
@@ -277,21 +321,64 @@ onBeforeUnmount(stopCarousel);
                 </div>
             </section>
 
+            <section id="experiencia" class="case-section bg-ink py-24 text-paper sm:py-32">
+                <div class="mx-auto w-[min(1180px,calc(100%-40px))] sm:w-[min(1180px,calc(100%-64px))]">
+                    <div class="flex flex-col justify-between gap-8 border-b border-white/15 pb-12 md:flex-row md:items-end">
+                        <div class="max-w-3xl">
+                            <p class="section-kicker text-acid">02 / Experiencia en acción</p>
+                            <h2 class="section-title mt-3 text-paper">Lo que dice mi CV.<br><span>Lo que resolví con él.</span></h2>
+                        </div>
+                        <p class="max-w-xs text-sm leading-7 text-white/55">Casos reales, problemas concretos y decisiones técnicas. Sin inventar métricas: el valor está en hacer visible el razonamiento.</p>
+                    </div>
+
+                    <div class="case-list">
+                        <article v-for="(item, index) in props.experience" :key="item.id" class="case-card group" :style="{ '--case-color': item.color }">
+                            <div class="case-card-number font-mono text-xs" aria-hidden="true">{{ String(index + 1).padStart(2, '0') }}</div>
+                            <div class="case-card-main">
+                                <div class="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[9px] uppercase tracking-[.08em] text-white/45">
+                                    <span :style="{ color: item.color }">{{ item.category }}</span>
+                                    <span>{{ item.period }}</span>
+                                </div>
+                                <h3 class="mt-5 max-w-2xl font-display text-3xl font-bold leading-none tracking-[-.07em] sm:text-4xl">{{ item.headline }}</h3>
+                                <p class="mt-5 max-w-2xl text-sm leading-7 text-white/60">{{ item.description }}</p>
+                                <ul class="case-highlights mt-7 grid gap-3 text-xs leading-5 text-white/70 sm:grid-cols-2">
+                                    <li v-for="highlight in item.highlights" :key="highlight">{{ highlight }}</li>
+                                </ul>
+                            </div>
+                            <div class="case-card-meta">
+                                <div class="case-card-company">
+                                    <span class="font-mono text-[9px] uppercase tracking-[.08em] text-white/40">{{ item.company }}</span>
+                                    <strong class="mt-2 block text-sm text-paper">{{ item.project }}</strong>
+                                    <span class="mt-1 block text-xs text-white/45">{{ item.role }} · {{ item.location }}</span>
+                                </div>
+                                <div class="case-card-schematic" aria-hidden="true">
+                                    <span>input</span><i></i><b :style="{ color: item.color, borderColor: item.color }">logic</b><i></i><span>result</span>
+                                </div>
+                                <div class="mt-7 flex flex-wrap gap-2">
+                                    <span v-for="technology in item.stack" :key="technology" class="case-tech">{{ technology }}</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
             <section id="metodo" class="border-y border-line bg-[#e8e5dc] py-24 sm:py-32">
                 <div class="mx-auto w-[min(1180px,calc(100%-40px))] sm:w-[min(1180px,calc(100%-64px))]">
                     <div class="flex flex-col justify-between gap-8 md:flex-row md:items-end">
                         <div>
-                            <p class="section-kicker">02 / Cómo trabajo</p>
+                            <p class="section-kicker">03 / Cómo trabajo</p>
                             <h2 class="section-title max-w-3xl">La herramienta cambia.<br><span>El criterio permanece.</span></h2>
                         </div>
                         <p class="max-w-xs text-sm leading-7 text-muted">Una buena implementación no es la que usa más tecnología, sino la que deja menos dudas al siguiente cambio.</p>
                     </div>
 
                     <div class="mt-16 grid gap-px bg-line md:grid-cols-3">
-                        <article v-for="principle in props.principles" :key="principle.number" class="min-h-[270px] bg-paper-bright p-7 sm:p-9">
-                            <span class="font-mono text-[10px] text-coral">{{ principle.number }}</span>
-                            <h3 class="mt-20 max-w-[220px] text-2xl font-bold leading-none tracking-[-.06em]">{{ principle.title }}</h3>
-                            <p class="mt-5 max-w-xs text-xs leading-6 text-muted">{{ principle.text }}</p>
+                        <article v-for="principle in props.principles" :key="principle.number" class="method-card relative min-h-[270px] overflow-hidden bg-paper-bright p-7 sm:p-9">
+                            <span class="principle-number absolute right-6 top-4 font-display text-8xl font-extrabold leading-none text-ink/[.045]">{{ principle.number }}</span>
+                            <span class="relative font-mono text-[10px] text-coral">{{ principle.number }}</span>
+                            <h3 class="relative mt-20 max-w-[220px] text-2xl font-bold leading-none tracking-[-.06em]">{{ principle.title }}</h3>
+                            <p class="relative mt-5 max-w-xs text-xs leading-6 text-muted">{{ principle.text }}</p>
                         </article>
                     </div>
 
@@ -318,7 +405,7 @@ onBeforeUnmount(stopCarousel);
                 <div class="mx-auto w-[min(1180px,calc(100%-40px))] sm:w-[min(1180px,calc(100%-64px))]">
                     <div class="grid gap-14 lg:grid-cols-[.7fr_1.3fr] lg:gap-24">
                         <div>
-                            <p class="section-kicker text-acid">03 / La visión completa</p>
+                        <p class="section-kicker text-acid">04 / La visión completa</p>
                             <h2 class="section-title text-paper">Un sistema no termina en <span>el código.</span></h2>
                         </div>
                         <div class="grid gap-8 text-sm leading-7 text-white/60 sm:grid-cols-2">
@@ -327,7 +414,7 @@ onBeforeUnmount(stopCarousel);
                         </div>
                     </div>
                     <div class="mt-16 flex flex-wrap gap-2 border-t border-white/15 pt-8">
-                        <span v-for="tool in ['SQL', 'Docker', 'Git', 'JUnit', 'JWT', 'mTLS', 'Puppeteer', 'PDF', 'XLSX', 'CFDI']" :key="tool" class="border border-white/20 px-3 py-2 font-mono text-[10px] uppercase tracking-[.06em] text-white/65">{{ tool }}</span>
+                        <span v-for="tool in ['Java 21', 'Spring Boot', 'SQL', 'Docker', 'Git', 'GitHub Actions', 'Gradle', 'Bash', 'PowerShell', 'JUnit', 'JaCoCo', 'JWT', 'mTLS', 'Puppeteer', 'Cheerio', 'Axios', 'React PDF', 'XLSX', 'CFDI']" :key="tool" class="border border-white/20 px-3 py-2 font-mono text-[10px] uppercase tracking-[.06em] text-white/65">{{ tool }}</span>
                     </div>
                 </div>
             </section>
@@ -336,7 +423,7 @@ onBeforeUnmount(stopCarousel);
                 <div class="mx-auto w-[min(1180px,calc(100%-40px))] sm:w-[min(1180px,calc(100%-64px))]">
                     <div class="grid gap-14 bg-coral p-7 sm:p-12 lg:grid-cols-[1fr_.82fr] lg:gap-24">
                         <div>
-                            <p class="section-kicker text-ink">04 / Siguiente paso</p>
+                        <p class="section-kicker text-ink">05 / Siguiente paso</p>
                             <h2 class="section-title max-w-2xl">¿Buscas a alguien que entienda <span>el sistema completo?</span></h2>
                             <p class="mt-7 max-w-lg text-base leading-8 text-ink/70">Estoy en {{ props.profile.location }}. Si mi forma de trabajar encaja con tu equipo, puedes escribirme o descargar mi CV.</p>
                         </div>
